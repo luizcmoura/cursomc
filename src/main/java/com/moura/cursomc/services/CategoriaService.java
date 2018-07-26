@@ -32,9 +32,10 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 
-	public Categoria update(Categoria categoria) {
-		find(categoria.getId());
-		return categoriaRepository.save(categoria);
+	public Categoria update(Categoria categoriaOld) {
+		Categoria categoriaNew = find(categoriaOld.getId());
+		updateData(categoriaNew, categoriaOld);
+		return categoriaRepository.save(categoriaNew);
 	}
 
 	public void delete(Integer id) {
@@ -45,15 +46,19 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é possível excluir uma Categoria que já possui Produtos");
 		}
 	}
-	
+
 	public List<Categoria> findAll() {
 		return categoriaRepository.findAll();
 	}
-	
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		
+
 		return categoriaRepository.findAll(pageRequest);
-		
+
+	}
+
+	private void updateData(Categoria categoriaNew, Categoria categoriaOld) {
+		categoriaNew.setNome(categoriaOld.getNome());
 	}
 }
