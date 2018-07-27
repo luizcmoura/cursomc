@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.moura.cursomc.domain.Cidade;
 import com.moura.cursomc.domain.Cliente;
+import com.moura.cursomc.domain.Endereco;
+import com.moura.cursomc.domain.enums.TipoCliente;
 import com.moura.cursomc.dto.ClienteDTO;
+import com.moura.cursomc.dto.ClienteNewDTO;
 import com.moura.cursomc.services.ClienteService;
 
 @RestController
@@ -36,8 +40,8 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody ClienteDTO clienteDTO){
-		Cliente cliente = fromDTO(clienteDTO);
+	public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDTO clienteNewDTO){
+		Cliente cliente = fromDTO(clienteNewDTO);
 		cliente = clienteService.insert(cliente);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -78,5 +82,22 @@ public class ClienteResource {
 	
 	public Cliente fromDTO(ClienteDTO clienteDTO) {
 		return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null, null);
+		
+	}
+	
+	public Cliente fromDTO(ClienteNewDTO clienteNewDTO) {
+		Cliente cliente = new Cliente(null, clienteNewDTO.getNome(), clienteNewDTO.getEmail(), clienteNewDTO.getCpfOuCnpj(), TipoCliente.toEnum(clienteNewDTO.getTipo()));
+		Cidade cidade = new Cidade(clienteNewDTO.getCidadeId(), null, null);
+		Endereco endereco = new Endereco(null, clienteNewDTO.getLogradouro(), clienteNewDTO.getNumero(), clienteNewDTO.getComplemento(), clienteNewDTO.getBairro(), clienteNewDTO.getCep(), cliente, cidade);
+		cliente.getEnderecos().add(endereco);
+		cliente.getTelefones().add(clienteNewDTO.getTelefone1());
+		if(clienteNewDTO.getTelefone2() != null){
+			cliente.getTelefones().add(clienteNewDTO.getTelefone2());
+		}
+		if(clienteNewDTO.getTelefone3() != null){
+			cliente.getTelefones().add(clienteNewDTO.getTelefone3());
+		}
+				
+		return cliente;
 	}
 }
