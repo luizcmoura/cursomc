@@ -8,7 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.moura.cursomc.domain.Cliente;
 import com.moura.cursomc.domain.enums.TipoCliente;
 import com.moura.cursomc.dto.ClienteNewDTO;
 import com.moura.cursomc.repositories.ClienteRepository;
