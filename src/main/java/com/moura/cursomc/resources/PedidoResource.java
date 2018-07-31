@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.moura.cursomc.domain.Pedido;
-import com.moura.cursomc.services.BoletoService;
 import com.moura.cursomc.services.PedidoService;
 
 @RestController
