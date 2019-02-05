@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -19,7 +17,6 @@ import com.moura.cursomc.domain.Endereco;
 import com.moura.cursomc.domain.enums.TipoCliente;
 import com.moura.cursomc.dto.ClienteDTO;
 import com.moura.cursomc.dto.ClienteNewDTO;
-import com.moura.cursomc.repositories.CidadeRepository;
 import com.moura.cursomc.repositories.ClienteRepository;
 import com.moura.cursomc.repositories.EnderecoRepository;
 import com.moura.cursomc.services.exceptions.DataIntegrityException;
@@ -33,9 +30,6 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-
-	@Autowired
-	private CidadeRepository cidadeRepository;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
