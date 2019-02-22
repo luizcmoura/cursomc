@@ -46,7 +46,7 @@ public class PedidoResource {
 			@RequestParam(value="orderBy", defaultValue="instante")String orderBy, 
 			@RequestParam(value="direction", defaultValue="DESC")String direction) {
 		
-		Page<Pedido> pageCategoria = pedidoService.findPage(page, linesPerPage, orderBy, direction);
-		return ResponseEntity.ok().body(pageCategoria);
+		Page<Pedido> pagePedido = pedidoService.findPage(page, linesPerPage, orderBy, direction);
+		return ResponseEntity.ok().body(pagePedido);
 	}
 }
